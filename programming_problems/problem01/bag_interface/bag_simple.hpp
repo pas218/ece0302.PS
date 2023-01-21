@@ -3,26 +3,27 @@
 
 #include "abstract_bag.hpp"
 
-template<typename T> class Bag{
+template<typename T> class Bag : public AbstractBag<T>
+{
 public:
 
   Bag();
   
-  ~Bag();
+  virtual ~Bag();
 
-  std::size_t getCurrentSize() const;
+  virtual std::size_t getCurrentSize() const;
 
-  bool isEmpty() const;
+  virtual bool isEmpty() const;
 
-  bool add(const T& entry);
+  virtual bool add(const T& entry);
 
-  bool remove(const T& entry);
+  virtual bool remove(const T& entry);
 
-  void clear();
+  virtual void clear();
 
-  std::size_t getFrequencyOf(const T& entry) const;
+  virtual std::size_t getFrequencyOf(const T& entry) const;
 
-  bool contains(const T& entry) const;
+  virtual bool contains(const T& entry) const;
 
   static const std::size_t MAXSIZE = 100;
   
