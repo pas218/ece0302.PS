@@ -45,7 +45,10 @@ public:
 
 private:
 
-  // TODO
+  int* bitString;
+  std::intmax_t stringSize;
+  bool isValid;
+
 };
 
 #endif
