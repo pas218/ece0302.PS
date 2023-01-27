@@ -5,6 +5,7 @@
 #include <iostream>
 #include "bitset.hpp"
 
+
 TEST_CASE( "Test bitset default construction", "[bitset]" ) {
 
     Bitset b;  
@@ -83,4 +84,47 @@ TEST_CASE( "Test combined", "[bitset]" ) {
         REQUIRE_FALSE(b.test(i + (1<<10)));
         REQUIRE(((b.test(i + (1<<11)) == true && s.at(i + (1<<11)) == '0') || (b.test(i + (1<<11)) == false && s.at(i + (1<<11)) == '1')));
     }
+}
+
+
+TEST_CASE( "Test toggle and bit teset", "[bitset]" ) {
+
+    Bitset b("00000001");  
+    REQUIRE(b.test(7));
+    REQUIRE_FALSE(b.test(6));
+    b.toggle(6);
+    REQUIRE(b.test(6));
+}
+
+TEST_CASE( "Invalid input then valid input", "[bitset]" ) {
+
+    Bitset b("ty01");  
+    REQUIRE_FALSE(b.good());
+    b.set(0);
+    b.reset(1);
+    REQUIRE(b.good());
+}
+
+TEST_CASE( "Toggling then checking", "[bitset]" ) {
+
+    Bitset b;  
+    REQUIRE_FALSE(b.test(7));
+    b.toggle(7);
+    REQUIRE(b.test(7));
+}
+
+
+TEST_CASE( "Returning invalid string", "[bitset]" ) {
+
+    Bitset b("12345");  
+    REQUIRE(b.asString() == "12345");
+    REQUIRE_FALSE(b.good());
+}
+
+TEST_CASE( "Change string then show changed output", "[bitset]" ) {
+
+    Bitset b("11111111");  
+    REQUIRE(b.asString() == "11111111");
+    b.reset(0);
+    REQUIRE(b.asString() == "01111111");
 }
