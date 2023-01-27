@@ -12,20 +12,27 @@ Bitset::Bitset()
         bitString[i] = 0;
     }
 
-    isValid = good();
+    isValid = 1;
 }
 
 Bitset::Bitset(intmax_t size)
 {
-    stringSize = size;
-    bitString = new int[stringSize];
+    if(size > 0){
 
-    for (unsigned int i = 0; i < stringSize; i++)
-    {
-        bitString[i] = 0;
+        stringSize = size;
+        bitString = new int[stringSize];
+
+        for (unsigned int i = 0; i < stringSize; i++)
+        {
+            bitString[i] = 0;
+        }
+
+        isValid = 1;
+    }
+    else{
+        isValid = 0;
     }
 
-    isValid = good();
 }
 
 Bitset::Bitset(const std::string &value)
@@ -33,12 +40,16 @@ Bitset::Bitset(const std::string &value)
     stringSize = value.size();
     bitString = new int[stringSize];
 
+    isValid = 1;
     for (unsigned int i = 0; i < stringSize; i++)
     {
         bitString[i] = int(value[i] - 48);
+
+        if((int(value[i] - 48) != 1) && (int(value[i] - 48) != 0)){
+            isValid = 0;
+        }
     }
 
-    isValid = good();
 }
 
 Bitset::~Bitset()
@@ -53,26 +64,14 @@ intmax_t Bitset::size() const
 
 bool Bitset::good() const
 {
-    for (unsigned int i = 0; i < stringSize; i++)
-    {
-        if (bitString[i] != 0 && bitString[i] != 1){
-            return 0;
-        }
-    }
-
-    if (stringSize == 0){
-        return 0;
-    }
-    else{
-        return 1;
-    }
+    return isValid;
 }
 
 void Bitset::set(intmax_t index)
 {
-    if((index <= stringSize - 1) && (index >= 0)){
+    if((index < stringSize) && (index >= 0)){
         bitString[index] = 1;
-        isValid = good();
+        isValid = 1;
     }
     else{
         isValid = 0;
@@ -81,9 +80,9 @@ void Bitset::set(intmax_t index)
 
 void Bitset::reset(intmax_t index)
 {
-    if((index <= stringSize - 1) && (index >= 0)){
+    if((index < stringSize) && (index >= 0)){
         bitString[index] = 0;
-        isValid = good();
+        isValid = 1;
     }
     else{
         isValid = 0;
@@ -92,14 +91,14 @@ void Bitset::reset(intmax_t index)
 
 void Bitset::toggle(intmax_t index)
 {
-    if((index <= stringSize - 1) && (index >= 0)){
+    if((index < stringSize) && (index >= 0)){
         if(bitString[index] == 1){
             bitString[index] = 0;
-            isValid = good();
+            isValid = 1;
         }
         else if(bitString[index] == 0){
             bitString[index] = 1;
-            isValid = good();
+            isValid = 1;
         }
         else{
             isValid = 0;
@@ -112,7 +111,7 @@ void Bitset::toggle(intmax_t index)
 
 bool Bitset::test(intmax_t index)
 {
-    if((index <= stringSize - 1) && (index >= 0)){
+    if((index < stringSize) && (index >= 0)){
         if(bitString[index] == 1){
             return 1;
         }

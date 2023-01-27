@@ -128,3 +128,11 @@ TEST_CASE( "Change string then show changed output", "[bitset]" ) {
     b.reset(0);
     REQUIRE(b.asString() == "01111111");
 }
+
+TEST_CASE( "Invalid Set", "[bitset]" ) {
+
+    Bitset b("11111111");  
+    b.set(20);
+    REQUIRE_FALSE(b.good());
+}
+
