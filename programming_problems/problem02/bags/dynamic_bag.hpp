@@ -43,9 +43,11 @@ public:
   // check if item is in the bag
   bool contains(const T& item) const;
 
+
 private:
 
-  // TODO
+  T* items;
+  size_t size;
 };
 
 #include "dynamic_bag.tpp"
