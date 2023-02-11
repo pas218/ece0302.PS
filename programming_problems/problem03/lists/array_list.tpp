@@ -14,48 +14,50 @@ ArrayList<T>::~ArrayList(){
 template <typename T>
 ArrayList<T>::ArrayList(const ArrayList& rhs)
 {
-  length == rhs.getLength();
+  
+  length = rhs.getLength();
+  list = new T(length);
+
   for(unsigned i = 0; i < length; i++){
-    list[i] = rhs.list[i];
+    setEntry(i, rhs.getEntry(i));
   }
 }
 
 template <typename T>
 ArrayList<T>& ArrayList<T>::operator=(ArrayList rhs){
 
-  ArrayList* helper;
+  if (this != &rhs){  
+    
+   length = rhs.getLength();
 
-  helper->length == rhs.getLength();
-  for(unsigned i = 0; i < length; i++){
-    helper->list[i] = rhs.list[i];
-  }
+    for(unsigned i = 0; i < length; i++){
+      setEntry(i, rhs.getEntry(i));
+    }
+  }   
 
-  return *helper;
+  return *this;
 }
 
 template <typename T>
 void ArrayList<T>::swap(ArrayList& rhs){
-  
-  ArrayList* helper;
 
-  helper->clear();
-  unsigned int swapLength = rhs.getLength();
 
-  for(unsigned i = 0;i < swapLength; i++){
-    helper->list[i] = rhs.list[i];
+  T holder[length];
+
+  for (unsigned i = 0; i < length; i++){
+    holder[i] = rhs.getEntry(i);
   }
-  
+
   rhs.clear();
-  for(unsigned int i = 0; i < length; i++){
-    rhs.list[i] = list[i];
+  for (unsigned i = 0; i < length; i++){
+    rhs.insert(i, getEntry(i));
   }
 
-  clear();
-  for(unsigned i = 0;i < swapLength; i++){
-    list[i] = helper->list[i];
+  
+  for (unsigned i = 0; i < length; i++){
+    setEntry(i, holder[i]);
   }
 
-  delete helper;
 
 }
 
@@ -72,13 +74,19 @@ std::size_t ArrayList<T>::getLength() const noexcept {
 template <typename T>
 bool ArrayList<T>::insert(std::size_t position, const T& item){
   
-  if((position >= 0) && (position <= length)){
+  if((position >= 0) && (position < length)){
 
     length++;
     for(unsigned int i = position; i < length; i++){
       list[i+1] = list[i];
     }
 
+    list[position] = item;
+    return 1;
+  }
+  else if (position == length){
+
+    length++;
     list[position] = item;
     return 1;
   }
@@ -117,7 +125,7 @@ T ArrayList<T>::getEntry(std::size_t position) const {
     return list[position];
   }
   else{
-    return -1;
+    return 0;
   }
 }
 
