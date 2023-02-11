@@ -72,7 +72,7 @@ std::size_t ArrayList<T>::getLength() const noexcept {
 template <typename T>
 bool ArrayList<T>::insert(std::size_t position, const T& item){
   
-  if((position >=0) && (position < length)){
+  if((position >= 0) && (position <= length)){
 
     length++;
     for(unsigned int i = position; i < length; i++){
