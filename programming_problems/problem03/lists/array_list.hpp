@@ -46,7 +46,9 @@ public:
 
 private:
 
-  // TODO
+  T* list = nullptr;
+  size_t length;
+
   
 };
 
