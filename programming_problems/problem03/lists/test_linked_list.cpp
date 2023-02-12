@@ -14,6 +14,7 @@ TEST_CASE("Prove of existence", "[LinkedList]")
   REQUIRE(list.isEmpty());
 }
 
+
 TEST_CASE("Test", "[LinkedList]")
 {
 
