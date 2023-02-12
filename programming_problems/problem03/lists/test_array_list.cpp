@@ -26,6 +26,13 @@ TEST_CASE("Test insert", "[ArrayList]")
 
   REQUIRE(list.getLength() == 3);
   REQUIRE(list.getEntry(2) == 3);
+
+  list.insert(1,20);
+
+  REQUIRE(list.getLength() == 4);
+  REQUIRE(list.getEntry(2) == 2);
+  REQUIRE(list.getEntry(1) == 20);
+
 }
 
 TEST_CASE("Test remove", "[ArrayList]")

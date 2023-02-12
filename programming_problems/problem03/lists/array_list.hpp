@@ -46,7 +46,7 @@ public:
 
 private:
 
-  T* list = nullptr;
+  T* list;
   size_t length;
 
   

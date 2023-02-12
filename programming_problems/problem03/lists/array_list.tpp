@@ -3,7 +3,7 @@
 template <typename T>
 ArrayList<T>::ArrayList(){
   length = 0;
-  list = new T[length];
+  list = new T[65536];
 }
 
 template <typename T>
@@ -16,7 +16,7 @@ ArrayList<T>::ArrayList(const ArrayList& rhs)
 {
   
   length = rhs.getLength();
-  list = new T(length);
+  list = new T(65536);
 
   for(unsigned i = 0; i < length; i++){
     setEntry(i, rhs.getEntry(i));
@@ -28,8 +28,9 @@ ArrayList<T>& ArrayList<T>::operator=(ArrayList rhs){
 
   if (this != &rhs){  
     
-   length = rhs.getLength();
-
+    length = rhs.getLength();
+    list = new T(65536);
+    
     for(unsigned i = 0; i < length; i++){
       setEntry(i, rhs.getEntry(i));
     }
@@ -74,20 +75,15 @@ std::size_t ArrayList<T>::getLength() const noexcept {
 template <typename T>
 bool ArrayList<T>::insert(std::size_t position, const T& item){
   
-  if((position >= 0) && (position < length)){
+  if((position >= 0) && (position <= length)){
 
-    length++;
-    for(unsigned int i = position; i < length; i++){
-      list[i+1] = list[i];
+    
+    for(unsigned int i = length; i > position; i--){
+      list[i] = list[i - 1];
     }
 
     list[position] = item;
-    return 1;
-  }
-  else if (position == length){
-
     length++;
-    list[position] = item;
     return 1;
   }
   else{
@@ -98,13 +94,14 @@ bool ArrayList<T>::insert(std::size_t position, const T& item){
 template <typename T>
 bool ArrayList<T>::remove(std::size_t position){
   
-  if((position >=0) && (position < length)){
+  if((position >= 0) && (position < length)){
 
-    length--;
-    for(unsigned int i = position; i < length; i++){
+    
+    for(unsigned int i = position; i < length - 1; i++){
       list[i] = list[i+1];
     }
 
+    length--;
     return 1;
   }
   else{
@@ -115,12 +112,13 @@ bool ArrayList<T>::remove(std::size_t position){
 template <typename T>
 void ArrayList<T>::clear(){
   length = 0;
+
 }
 
 template <typename T>
 T ArrayList<T>::getEntry(std::size_t position) const {
   
-  if((position >=0) && (position < length)){
+  if((position >= 0) && (position < length)){
 
     return list[position];
   }
@@ -132,8 +130,7 @@ T ArrayList<T>::getEntry(std::size_t position) const {
 template <typename T>
 void ArrayList<T>::setEntry(std::size_t position, const T& newValue){
 
-  if((position >=0) && (position < length)){
-
+  if((position >= 0) && (position < length)){
     list[position] = newValue;
 
   }
