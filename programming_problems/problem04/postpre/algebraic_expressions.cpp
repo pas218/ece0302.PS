@@ -43,6 +43,54 @@ bool isPost(string s) {
 
 void convert(string &postfix, string &prefix) {
 
-  // TODO
+
+  //only convert if the postfix is valid
+  if (isPost(postfix)){
+
+    //variables for later use
+    int postLength = postfix.size();
+    char ch = postfix[postLength - 1];
+
+
+    //if the last character is not an operator, simply attach it to the begining of the prefix
+    if (!isoperator(ch)){
+      prefix = ch + prefix;
+    }
+
+    //if the last character is an operator
+    else{
+
+      //find the separating point between the inner expressions
+      int beginPost = endPost(postfix, postLength - 2);
+
+      //get the inner expressions
+      std::string holderFirst, holderSecond = "";
+
+      for(unsigned i = beginPost; i < postLength - 1; i++){
+        holderFirst += postfix[i];
+      }
+
+      for(unsigned i = 0; i < beginPost; i++){
+        holderSecond += postfix[i];
+      }
+
+      
+      //fidn the prefix versions of the inner expression recursively
+      std::string prefix1, prefix2;
+
+      convert(holderFirst, prefix1);
+      convert(holderSecond, prefix2);
+
+
+      //assemble the prefix expression
+      prefix = ch + prefix2 + prefix1 + prefix;
+
+      
+
+    }
+
+  }
+
+
   
 }
