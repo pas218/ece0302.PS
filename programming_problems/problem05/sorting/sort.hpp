@@ -6,12 +6,14 @@
 template<typename T> LinkedList<T> sort(LinkedList<T> list)
 {
 
+	//**USING BUBBLE SORT
+
 	//helper variable to exit loop if no swaps were made 
 	bool madeSwap;
 	//holder variable to help with swapping
 	T holderVar;
 	
-	//start bubble sort loop
+	//start total bubble sort loop
 	for (int i = 0; i < list.getLength(); i++){
 
 		madeSwap = 0;
