@@ -40,7 +40,13 @@ TEST_CASE( "Test Stack push and size", "[ADT Stack]" )
 			success = (stackSize == (i+1));
 			REQUIRE(success);
 		}
+
+		intStack.pop();
+		REQUIRE(intStack.peek() == 1);
+		intStack.clear();
+		REQUIRE(intStack.size() == 0);
 }
+
 
 TEST_CASE( "Test XMLParser tokenizeInputString", "[XMLParser]" )
 {
@@ -99,6 +105,7 @@ TEST_CASE( "Test Stack handout-1", "[XMLParser]" )
        REQUIRE(charStack.isEmpty() == true);      
 }
 
+
 // You can assume that the beginning and the end of CONTENT will not be filled with whitespace
 TEST_CASE( "Test XMLParser tokenizeInputString Handout-0", "[XMLParser]" )
 {
@@ -119,6 +126,45 @@ TEST_CASE( "Test XMLParser tokenizeInputString Handout-0", "[XMLParser]" )
 			REQUIRE(result[i].tokenString.compare(output[i].tokenString) == 0);
 		}
 }
+
+// You can assume that the beginning and the end of CONTENT will not be filled with whitespace
+TEST_CASE( "Test XMLParser tokenizeInputString, invalid 1", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize single element test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<test>stuff</test/>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(!success);
+}
+
+// You can assume that the beginning and the end of CONTENT will not be filled with whitespace
+TEST_CASE( "Test XMLParser tokenizeInputString, invalid 2", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize single element test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<.test>stuff</test>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(!success);
+}
+
+// You can assume that the beginning and the end of CONTENT will not be filled with whitespace
+TEST_CASE( "Test XMLParser tokenizeInputString, invalid 3", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize single element test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<test>stuff</te|st>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(!success);
+}
+
+
+
 
 
 // You can assume that the beginning and the end of CONTENT will not be filled with whitespace
@@ -148,6 +194,30 @@ TEST_CASE( "Test XMLParser tokenizeInputString Handout-1", "[XMLParser]" )
 		}
 }
 
+// You can assume that the beginning and the end of CONTENT will not be filled with whitespace
+TEST_CASE( "Test XMLParser tokenizeInputString, invlad more complex 1 ", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize multiple elements test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Note src='gmail'>  <From]>Tom</From> <To>Alice</To> </Note>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(!success);
+}
+
+// You can assume that the beginning and the end of CONTENT will not be filled with whitespace
+TEST_CASE( "Test XMLParser tokenizeInputString, invlad more complex 2 ", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize multiple elements test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Note src='gmail'>  <From>Tom</From?> <To>Alice</To> </Note>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(!success);
+}
+
 TEST_CASE( "Test XMLParser parseTokenizedInput Handout-0", "[XMLParser]" )
 {
 	   INFO("Hint: tokenize single element test of XMLParse");
@@ -173,12 +243,29 @@ TEST_CASE( "Test XMLParser parseTokenizedInput Handout-0", "[XMLParser]" )
 		}
 }
 
+TEST_CASE( "Test XMLParser parseTokenizedInput, fail", "[XMLParser]" )
+{
+	   INFO("Hint: tokenize single element test of XMLParse");
+		// Create an instance of XMLParse
+		XMLParser myXMLParser;
+		string testString = "<test myattr='abcdef'>stuff<this_is_empty_tag/>";
+		bool success;
+		success = myXMLParser.tokenizeInputString(testString);
+		REQUIRE(success);
+		std::vector<TokenStruct> output = myXMLParser.returnTokenizedInput();
+		success = myXMLParser.parseTokenizedInput();
+		REQUIRE(success);
+		
+}
+
+
+
 TEST_CASE( "Test XMLParser Final Handout-0", "[XMLParser]" )
 {
 	   INFO("Hint: TestFile");
-		// Create an instance of XMLParse
+		//Create an instance of XMLParse
 		XMLParser myXMLParser;
-		ifstream myfile ("./TestFile.txt");
+		ifstream myfile ("TestFile.txt");
 		std::string inputString((std::istreambuf_iterator<char>(myfile) ), (std::istreambuf_iterator<char>()) );
 
 		bool success;

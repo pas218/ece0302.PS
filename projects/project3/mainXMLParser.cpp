@@ -8,8 +8,8 @@ using namespace std;
 
 int main () {
 	bool success;
-	string inputString;
-	ifstream myfile ("./xmlFile.txt");
+	std::string inputString;
+	std::ifstream myfile ("./xmlFile.txt");
 	XMLParser myParser;
 	char c;
 
