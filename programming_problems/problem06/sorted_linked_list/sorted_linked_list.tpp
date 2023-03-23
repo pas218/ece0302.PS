@@ -85,11 +85,8 @@ void SortedLinkedList<T>::insert(const T& item)
           break;
         }
         
+      }
     }
-  }
-
-    
-  
   }
 }
 
@@ -142,7 +139,6 @@ long int SortedLinkedList<T>::getPosition(const T& item)
     if (item == getEntry(i)){
       return i;
     }
-
   }
 
   //if not in list, return -1
