@@ -36,6 +36,7 @@ TEST_CASE("Testing getLength", "[sorted linked list]") {
   REQUIRE(lst.getLength() == 0);
 }
 
+
 TEST_CASE("Testing insert", "[sorted linked list]") {
   ListType lst;
 
@@ -50,6 +51,7 @@ TEST_CASE("Testing insert", "[sorted linked list]") {
     REQUIRE(lst.getEntry(i) == 'a' + i);
   }
 }
+
 
 TEST_CASE("Testing remove", "[sorted linked list]") {
   ListType lst;
@@ -78,6 +80,7 @@ TEST_CASE("Testing remove", "[sorted linked list]") {
   REQUIRE(lst.getEntry(21) == 'y');
 }
 
+
 TEST_CASE("Testing clear", "[sorted linked list]") {
   ListType lst;
 
@@ -103,6 +106,7 @@ TEST_CASE("Testing clear", "[sorted linked list]") {
   REQUIRE(lst_empty.getLength() == 0);
 }
 
+
 TEST_CASE("Testing getEntry", "[sorted linked list]") {
   ListType lst;
 
@@ -117,6 +121,7 @@ TEST_CASE("Testing getEntry", "[sorted linked list]") {
     REQUIRE(lst.getEntry(i) == 'a' + i);
   }
 }
+
 
 TEST_CASE("Testing getPosition empty", "[sorted linked list]") {
   ListType lst;
@@ -163,6 +168,7 @@ TEST_CASE("Testing init from list", "[sorted linked list]") {
   REQUIRE(sorted.getPosition('e') == 4);
 }
 
+
 TEST_CASE("Testing copy", "[sorted linked list]") {
   ListType lst;
 
@@ -181,6 +187,7 @@ TEST_CASE("Testing copy", "[sorted linked list]") {
     REQUIRE(lst_copy.getEntry(i) == lst.getEntry(i));
   }
 }
+
 
 TEST_CASE("Testing copy empty", "[sorted linked list]") {
   ListType lst;
@@ -210,6 +217,7 @@ TEST_CASE("Testing assignment", "[sorted linked list]") {
   }
 }
 
+
 TEST_CASE("Testing assignment to/from empty", "[sorted linked list]") {
   ListType lst;
   ListType lst_copy;
@@ -238,6 +246,7 @@ TEST_CASE("Testing list exceptions", "[linked list]") {
   CHECK_THROWS_AS(lst.setEntry(5,'c'), std::range_error);
 
 }
+
 
 TEST_CASE("Testing exceptions", "[sorted linked list]") {
   ListType lst;
