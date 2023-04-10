@@ -52,6 +52,5 @@ private:
   
 };
 
-#include "array_list.tpp"
 
 #endif

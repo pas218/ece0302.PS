@@ -3,6 +3,24 @@
 
 #include "abstract_list.hpp"
 
+
+template<class ItemType>
+class Node
+{
+private:
+   ItemType        item; // A data item
+   Node<ItemType>* next; // Pointer to next node
+   
+public:
+   Node();
+   Node(const ItemType& anItem);
+   Node(const ItemType& anItem, Node<ItemType>* nextNodePtr);
+   void setItem(const ItemType& anItem);
+   void setNext(Node<ItemType>* nextNodePtr);
+   ItemType getItem() const ;
+   Node<ItemType>* getNext() const ;
+}; // end Node
+
 template <typename T>
 class List: public AbstractList<T>
 {
@@ -20,7 +38,6 @@ public:
   // copy assignment
   List& operator=(List x);
 
-  // swap
   void swap(List& x);
   
   // determine if a list is empty
@@ -29,16 +46,16 @@ public:
   // return current length of the list
   std::size_t getLength() const noexcept;
 
-  // insert item at position in the list 
+  // insert item at position in the list
   void insert(std::size_t position, const T& item);
 
-  // remove item at position in the list 
+  // remove item at position in the list
   void remove(std::size_t position);
 
   // remove all items from the list
   void clear();
 
-  // get a copy of the item at position 
+  // get a copy of the item at position
   T getEntry(std::size_t position) const;
 
   // set the value of the item at position 
@@ -46,10 +63,15 @@ public:
 
 private:
 
-  //TODO
+  Node<T>* headPtr;
+  std::size_t length;
   
 };
+
+
+
 
 #include "list.tpp"
 
 #endif
+

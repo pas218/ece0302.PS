@@ -5,19 +5,25 @@ project(priorityqueue CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCE test_priority_queue.cpp 
-abstract_list.hpp list.hpp list.tpp 
-abstract_sorted_list.hpp sorted_list.hpp sorted_list.tpp 
+set(SOURCE test_priority_queue.cpp
+abstract_list.hpp list.hpp list.tpp
+abstract_sorted_list.hpp sorted_list.hpp sorted_list.tpp
 abstract_priority_queue.hpp priority_queue.hpp priority_queue.tpp)
+
+# if Linked List is used and node is copied into directory,
+# add node to source
+if(EXISTS "${PROJECT_SOURCE_DIR}/Node.tpp" AND EXISTS "${PROJECT_SOURCE_DIR}/Node.hpp")
+    set(SOURCE ${SOURCE} Node.hpp Node.tpp)
+endif()
 
 # create unittests
 add_executable(test-priority-queue test_priority_queue.cpp catch.hpp ${SOURCE})
-enable_testing()
 
+enable_testing()
 # unit tests
 add_test(test-priority-queue test-priority-queue)
 
 add_custom_target(submission COMMAND
     ${CMAKE_COMMAND} -E tar "cfv" "${CMAKE_CURRENT_BINARY_DIR}/problem07_priority_queue.zip" --format=zip
        ${SOURCE}
-       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})   
+       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}) 

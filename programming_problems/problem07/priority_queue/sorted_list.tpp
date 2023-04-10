@@ -40,13 +40,56 @@ std::size_t SortedList<T, L>::getLength() const noexcept
 template <typename T, typename L>
 void SortedList<T, L>::insert(const T& item)
 {
-  // TODO
+  //helper item for comparison
+  T compareHelper;
+
+  //if length is zero, just insert at beginning
+  if (isEmpty()){
+    plist.insert(0, item);
+  }
+
+  //else, need to find its place in the order
+  else{
+
+    //see if item is larger than anything else in list, if so, add it to end of list
+    compareHelper = getEntry(plist.getLength() - 1);
+    if (item > compareHelper){
+      plist.insert(getLength(), item);
+    }
+
+    //if item isnt largest, see where it fits and place it there
+    else{
+
+
+      for (unsigned i = 0; i < plist.getLength(); i++){
+        
+        //get item
+        compareHelper = getEntry(i);
+
+        //if item is less than then the comparer item, insert it at that position
+        if(item <= compareHelper){
+          plist.insert(i, item);
+          break;
+        }
+        
+      }
+    }
+  }
 }
 
 template <typename T, typename L>
 void SortedList<T, L>::remove(const T& item)
 {
-  // TODO
+  if(isEmpty()) throw std::range_error("empty list in remove");
+  
+  //helper var
+  int positionVar;
+
+  //get item position
+  positionVar = getPosition(item);
+
+  //remove at that position
+  removeAt(positionVar);
 }
 
 template <typename T, typename L>
@@ -70,6 +113,15 @@ T SortedList<T, L>::getEntry(std::size_t position) const
 template <typename T, typename L>
 long int SortedList<T, L>::getPosition(const T& newValue)
 {
-  // TODO
-  return 0;
+  //start searching loop
+  for (unsigned i = 0; i < plist.getLength(); i++){
+
+    //check if item at point is the specified item
+    if (newValue == getEntry(i)){
+      return i;
+    }
+  }
+
+  //if not in list, return -1
+  return -1;
 }
