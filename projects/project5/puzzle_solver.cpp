@@ -26,6 +26,7 @@ std::pair<bool, std::size_t> PuzzleSolver::search() {
   std::size_t solution_cost;
 
   frontier_queue<Puzzle> frontier;
+  std::unordered_set<Puzzle> explored;
   //TODO: instantiate explored as an unordered_set
 
   frontier.push(initial, 0, initial.heuristic(goal));
@@ -39,7 +40,7 @@ std::pair<bool, std::size_t> PuzzleSolver::search() {
 
     auto node = frontier.pop();
     Puzzle value = node.getValue();
-    //TODO: add state to explored 
+    explored.insert(value);
 
     std::size_t cost = node.getPathCost();
 
