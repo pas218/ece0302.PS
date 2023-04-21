@@ -3,6 +3,7 @@
 
 #include "abstract_graph.hpp"
 
+
 template <typename LabelType>
 class AdjacencyListGraph: public AbstractGraph<LabelType>
 {
@@ -21,6 +22,13 @@ class AdjacencyListGraph: public AbstractGraph<LabelType>
         void depthFirstTraversal(LabelType start, void visit(LabelType&));
 
         void breadthFirstTraversal(LabelType start, void visit(LabelType&));
+
+    private:
+
+        std::map<LabelType, std::set<LabelType>> listOfNodes;
+        int numEdges;
+        std::set<LabelType> existingNodes;
+
   
 };
 

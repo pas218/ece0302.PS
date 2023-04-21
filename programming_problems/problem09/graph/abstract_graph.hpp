@@ -3,6 +3,9 @@
 #define _ABSTRACT_GRAPH_H_
 
 #include <cstdlib>
+#include <map>
+#include <set>
+#include <vector>
 
 template <typename LabelType>
 class AbstractGraph
