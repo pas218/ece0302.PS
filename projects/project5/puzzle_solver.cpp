@@ -41,6 +41,7 @@ std::pair<bool, std::size_t> PuzzleSolver::search() {
     auto node = frontier.pop();
     Puzzle value = node.getValue();
     explored.insert(value);
+    //TODO: insert beginning value
 
     std::size_t cost = node.getPathCost();
 
