@@ -5,18 +5,18 @@
 template <typename T>
 State<T> frontier_queue<T>::pop() {
 
-
+/*
   int sizeQueue = queue.size();
 
   if(sizeQueue == 1){
-    State<T>* returnState;
-    returnState = &queue[0];
+    //State<T> returnState;
+    State<T> returnState = queue[0];
     queue.pop_back();
-    return *returnState;
+    return returnState;
   }
 
-  State<T>* returnState;
-  returnState = &queue[0];
+  //State<T> returnState;
+  State<T> returnState = queue[0];
 
   queue[0] = queue[sizeQueue - 1];
   queue.pop_back();
@@ -24,35 +24,37 @@ State<T> frontier_queue<T>::pop() {
 
   int locationHolder = 0;
   bool keepGoing = 1;
-  State<T>* swapHolder;
+  //State<T> swapHolder;
 
   while(keepGoing){
     
     if(queue[locationHolder].getFCost() > queue[locationHolder*2+1].getFCost()){
-      swapHolder = &queue[locationHolder];
+      State<T> swapHolder = queue[locationHolder];
       queue[locationHolder] = queue[locationHolder*2+1];
-      queue[locationHolder*2+1] = *swapHolder;
+      queue[locationHolder*2+1] = swapHolder;
     }
     else if (queue[locationHolder].getFCost() > queue[locationHolder*2+2].getFCost()){
-      swapHolder = &queue[locationHolder];
+      State<T> swapHolder = queue[locationHolder];
       queue[locationHolder] = queue[locationHolder*2+2];
-      queue[locationHolder*2+2] = *swapHolder;
+      queue[locationHolder*2+2] = swapHolder;
     }
     else{
       keepGoing = 0;
     }
 
   }
+*/
 
-
-  return *returnState;
+  //State<T> test;
+  //return returnState;
+  return queue[0];
    
 }
 
 template <typename T>
 void frontier_queue<T>::push(const T &p, std::size_t cost, std::size_t heur) {
 
-  State<T> newState(p, cost, heur);
+ /* State<T> newState(p, cost, heur);
   
 
   queue.push_back(newState);
@@ -73,22 +75,23 @@ void frontier_queue<T>::push(const T &p, std::size_t cost, std::size_t heur) {
         keepGoing = 0;
       }
     }
-  }
+  }*/
 }
 
 template <typename T>
 bool frontier_queue<T>::empty() {
-  return queue.empty();
+  return 0;
+  //return queue.empty();
 }
 
 template <typename T> 
 bool frontier_queue<T>::contains(const T &p) {
 
-  for(int i = 0; i < queue.size(); i++){
+  /*for(int i = 0; i < queue.size(); i++){
 
     if(p == queue[i].getValue())
       return 1;
-    }
+    }*/
 
   return 0;
 }
@@ -97,7 +100,7 @@ template <typename T>
 void frontier_queue<T>::replaceif(const T &p, std::size_t cost) {
 
 
-
+  /*
   bool keepGoing = 1;
   int indexTracker = 0;
   int fCostHolder;
@@ -135,6 +138,6 @@ void frontier_queue<T>::replaceif(const T &p, std::size_t cost) {
       }
     }
     indexTracker++;
-  }
+  }*/
 }
 
