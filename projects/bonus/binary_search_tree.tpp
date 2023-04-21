@@ -95,8 +95,44 @@ template <typename KeyType, typename ItemType>
 bool BinarySearchTree<KeyType, ItemType>::insert(
     const KeyType& key, const ItemType& item)
 {
-    // TODO 
-    return false;
+
+    //if tree is empty, make the node the root
+    if(isEmpty()){
+        Node<KeyType, ItemType>* newNode = new Node<KeyType, ItemType>;
+        newNode->key = key;
+        newNode->data = item;
+        root = newNode;
+        return true;
+    }
+    //if tree not empty, ind appropriate spot
+    else{
+        //make helper nodes and find the nearest spot
+        Node<KeyType, ItemType>* searchNode = root;
+        Node<KeyType, ItemType>* parentNode = 0;
+        search(key, searchNode, parentNode);
+
+        //if node exist, return false
+        if(searchNode->key == key){
+            return false;
+        }
+        else{
+            
+            //create new node 
+            Node<KeyType, ItemType>* newNode = new Node<KeyType, ItemType>;
+            newNode->key = key;
+            newNode->data = item;
+
+            //insert node
+            if(key < searchNode->key){
+                searchNode->left = newNode;
+            }
+            else{
+                searchNode->right = newNode;
+            }
+
+            return true;
+        }   
+    }
 }
 
 template <typename KeyType, typename ItemType>
@@ -127,30 +163,161 @@ bool BinarySearchTree<KeyType, ItemType>::retrieve(
 template <typename KeyType, typename ItemType>
 bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
 {
+    //if empty, return false
     if (isEmpty())
-        return false; // empty tree
-
-    // TODO
+        return false; 
 
 
-    // case one thing in the tree
+    //find node and its parent
+    Node<KeyType, ItemType>* searchNode = root;
+    Node<KeyType, ItemType>* parentNode = 0;
+    search(key, searchNode, parentNode);
+    bool childSide;
 
-    // case, found deleted item at leaf
+    //if key does not exist, return 0
+    if(key != searchNode->key){
+        return false;
+    }
 
-    // case, item to delete has only a right child
+    else{
 
-    // case, item to delete has only a left child
+        //if node is not the root of the entire tree, go here
+        if(!(parentNode == 0)){
+            
+            
+            if(parentNode->right == searchNode){
+                childSide = 1; 
+            }
+            else{
+                childSide = 0;
+            }
+            
 
-    // case, item to delete has two children
+            //if node has no children
+            if((searchNode->right == 0) && (searchNode->left == 0)){
+                if(childSide){
+                    parentNode->right = 0;
+                }
+                else{
+                    parentNode->left = 0;
+                }
+            }
+            //if node has only a right child
+            else if(!(searchNode->right == 0) && (searchNode->left == 0)){
+                if(childSide){
+                    parentNode->right = searchNode->right;
+                }
+                else{
+                    parentNode->left = searchNode->right;
+                }
+            }
+            //if node has only a left child
+            else if((searchNode->right == 0) && !(searchNode->left == 0)){
+                if(childSide){
+                    parentNode->right = searchNode->left;
+                }
+                else{
+                    parentNode->left = searchNode->left;
+                    
+                }   
 
-    return false; // default should never get here
+            }
+            else{
+                Node<KeyType, ItemType>* in;
+                Node<KeyType, ItemType>* in_parent;
+                inorder(searchNode, in, in_parent);
+                
+                
+                if (in_parent == searchNode){
+                    if(childSide){
+                        parentNode->right = in;
+                    }
+                    else{
+                        parentNode->left = in;
+                    } 
+                }
+                else{
+                    
+                    in_parent->left = in->right;
+
+                    if(childSide){
+                        in->left = searchNode->left;
+                        in->right = searchNode->right;
+                        parentNode->right = in;
+                    }
+                    else{
+                        in->left = searchNode->left;
+                        in->right = searchNode->right;
+                        parentNode->left = in;
+                    } 
+                }
+            }
+        }
+        //if the slected node is a the root for the entire tree, but it has children
+        else if(!(searchNode->right == 0) || !(searchNode->left == 0)){
+
+            
+            //if node has a right child
+            if(!(searchNode->right == 0) && (searchNode->left == 0)){
+                root = searchNode->right;
+            }
+            //if node has a left child
+            else if((searchNode->right == 0) && !(searchNode->left == 0)){
+                root = searchNode->left; 
+            }
+            else{
+                Node<KeyType, ItemType>* in;
+                Node<KeyType, ItemType>* in_parent;
+                inorder(searchNode, in, in_parent);
+
+                if (in_parent == searchNode){
+                    root = in;
+                    root->left = searchNode->left;
+                }
+                else{
+                    
+                    in_parent->left = in->right;
+
+                  
+                    in->left = searchNode->left;
+                    in->right = searchNode->right;
+                    root = in;
+                   
+                }
+            }
+        }
+        //if the selected node is the only node in the tree
+        else{
+            destroy();
+        }
+
+        return true;
+    }
+    
+    
 }
 
 template <typename KeyType, typename ItemType>
 void BinarySearchTree<KeyType, ItemType>::inorder(Node<KeyType, ItemType>* curr,
     Node<KeyType, ItemType>*& in, Node<KeyType, ItemType>*& parent)
 {
-    // TODO: find inorder successor of "curr" and assign to "in"
+    
+    in = curr;
+    parent = in;
+    in = in->right;
+
+    while(true){
+        //if a both children exists go left
+        if((in->left != 0)){
+            parent = in;
+            in = in->left;
+        }
+        //if not more children, stop
+        else{
+          break;  
+        }
+    }
+    
 
 }
 

@@ -1,34 +1,34 @@
-#ifndef _LIST_HPP_
-#define _LIST_HPP_
+#ifndef _LIST_HPP
+#define _LIST_HPP
 
 #include "abstract_list.hpp"
 
-template <typename T>
+template<typename T>
 class List: public AbstractList<T>
 {
 public:
-  
+
   // default constructor
   List();
-  
-  // copy constructor
-  List(const List& x);
-    
+
   // destructor
   ~List();
-  
-  // copy assignment
-  List& operator=(List x);
 
-  // swap
-  void swap(List& x);
+  // copy constructor
+  List(const List& rhs);
+
+  // copy assignment
+  List& operator=(List rhs);
+
+  // swap 
+  void swap(List& rhs);
   
   // determine if a list is empty
   bool isEmpty() const noexcept;
 
   // return current length of the list
   std::size_t getLength() const noexcept;
-
+  
   // insert item at position in the list 
   void insert(std::size_t position, const T& item);
 
@@ -46,10 +46,13 @@ public:
 
 private:
 
-  //TODO
+  T* list;
+  size_t length;
+
   
 };
 
 #include "list.tpp"
+
 
 #endif

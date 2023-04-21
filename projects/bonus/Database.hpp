@@ -2,6 +2,17 @@
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
 
+
+#include "binary_search_tree.hpp"
+#include "list.hpp"
+#include <string>
+
+
+typedef struct itemStruct {
+	std::string key1;
+  std::string key2;
+} itemStruct;
+
 template <typename T>
 class Database
 {
@@ -31,7 +42,11 @@ public:
 
 private:
 
-  // TODO:
+  BinarySearchTree<std::string, std::size_t> treeKey1;
+  BinarySearchTree<std::string, std::size_t> treeKey2;
+  List<itemStruct> keyPairs;
+  List<T> items;
+  std::size_t entries;
 
 };
 
