@@ -96,3 +96,35 @@ TEST_CASE("Test Copy Assign", "[copy assign]") {
     
 }
 
+TEST_CASE("Test Remove more complex", "[remove]") {
+    TreeType bst1;
+
+    bst1.insert(10, 10);
+    bst1.insert(5, 5);
+    bst1.insert(15, 15);
+    bst1.insert(12, 12);
+    bst1.insert(18, 18);
+
+    int item;
+
+    bst1.remove(10);
+    REQUIRE(!bst1.retrieve(10, item));
+
+    REQUIRE(bst1.retrieve(12, item));
+
+    bst1.remove(12);
+    REQUIRE(!bst1.retrieve(12, item));
+
+    bst1.remove(18);
+    REQUIRE(!bst1.retrieve(18, item));
+
+    bst1.remove(5);
+    REQUIRE(!bst1.retrieve(5, item));
+
+
+    bst1.remove(15);
+    REQUIRE(!bst1.retrieve(15, item));
+
+    REQUIRE(bst1.isEmpty());
+}
+
