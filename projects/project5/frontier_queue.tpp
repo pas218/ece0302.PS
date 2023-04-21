@@ -5,7 +5,7 @@
 template <typename T>
 State<T> frontier_queue<T>::pop() {
 
-/*
+
   int sizeQueue = queue.size();
 
   if(sizeQueue == 1){
@@ -24,45 +24,76 @@ State<T> frontier_queue<T>::pop() {
 
   int locationHolder = 0;
   bool keepGoing = 1;
+  bool sideSmaller = 0;
   //State<T> swapHolder;
 
   while(keepGoing){
     
-    if(queue[locationHolder].getFCost() > queue[locationHolder*2+1].getFCost()){
-      State<T> swapHolder = queue[locationHolder];
-      queue[locationHolder] = queue[locationHolder*2+1];
-      queue[locationHolder*2+1] = swapHolder;
-    }
-    else if (queue[locationHolder].getFCost() > queue[locationHolder*2+2].getFCost()){
-      State<T> swapHolder = queue[locationHolder];
-      queue[locationHolder] = queue[locationHolder*2+2];
-      queue[locationHolder*2+2] = swapHolder;
+    if((locationHolder < sizeQueue) && ((locationHolder*2+1)  < sizeQueue)){
+
+      sideSmaller = (queue[locationHolder*2+1].getFCost() < queue[locationHolder*2+2].getFCost());
+
+      if(sideSmaller){
+        if(queue[locationHolder].getFCost() > queue[locationHolder*2+1].getFCost()){
+          State<T> swapHolder = queue[locationHolder];
+          queue[locationHolder] = queue[locationHolder*2+1];
+          queue[locationHolder*2+1] = swapHolder;
+          locationHolder = locationHolder*2+1;
+        }
+        else if (queue[locationHolder].getFCost() > queue[locationHolder*2+2].getFCost()){
+          State<T> swapHolder = queue[locationHolder];
+          queue[locationHolder] = queue[locationHolder*2+2];
+          queue[locationHolder*2+2] = swapHolder;
+          locationHolder = locationHolder*2+2;
+        }
+        else{
+          keepGoing = 0;
+        }
+      }
+      else{
+        if (queue[locationHolder].getFCost() > queue[locationHolder*2+2].getFCost()){
+          State<T> swapHolder = queue[locationHolder];
+          queue[locationHolder] = queue[locationHolder*2+2];
+          queue[locationHolder*2+2] = swapHolder;
+          locationHolder = locationHolder*2+2;
+        }
+        else if(queue[locationHolder].getFCost() > queue[locationHolder*2+1].getFCost()){
+          State<T> swapHolder = queue[locationHolder];
+          queue[locationHolder] = queue[locationHolder*2+1];
+          queue[locationHolder*2+1] = swapHolder;
+          locationHolder = locationHolder*2+1;
+        }
+        else{
+          keepGoing = 0;
+        }
+      }
     }
     else{
       keepGoing = 0;
     }
-
   }
-*/
+
+  
+
 
   //State<T> test;
-  //return returnState;
-  return queue[0];
+  return returnState;
+  //return queue[0];
    
 }
 
 template <typename T>
 void frontier_queue<T>::push(const T &p, std::size_t cost, std::size_t heur) {
 
- /* State<T> newState(p, cost, heur);
+  State<T> newState(p, cost, heur);
   
 
   queue.push_back(newState);
 
   int keepGoing = 1;
-  int locationHolder = queue.size();
+  int locationHolder = queue.size() - 1;
 
-  if(locationHolder != 1){
+  if(locationHolder != 0){
 
     while(keepGoing){
       
@@ -75,23 +106,24 @@ void frontier_queue<T>::push(const T &p, std::size_t cost, std::size_t heur) {
         keepGoing = 0;
       }
     }
-  }*/
+  }
 }
 
 template <typename T>
 bool frontier_queue<T>::empty() {
-  return 0;
-  //return queue.empty();
+  //return 0;
+  return queue.empty();
 }
 
 template <typename T> 
 bool frontier_queue<T>::contains(const T &p) {
 
-  /*for(int i = 0; i < queue.size(); i++){
+  for(int i = 0; i < queue.size(); i++){
 
-    if(p == queue[i].getValue())
+    if(p == queue[i].getValue()){
       return 1;
-    }*/
+    }
+  }
 
   return 0;
 }
@@ -100,7 +132,7 @@ template <typename T>
 void frontier_queue<T>::replaceif(const T &p, std::size_t cost) {
 
 
-  /*
+  
   bool keepGoing = 1;
   int indexTracker = 0;
   int fCostHolder;
@@ -138,6 +170,6 @@ void frontier_queue<T>::replaceif(const T &p, std::size_t cost) {
       }
     }
     indexTracker++;
-  }*/
+  }
 }
 
